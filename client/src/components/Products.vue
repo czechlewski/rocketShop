@@ -42,7 +42,7 @@ import { mapMutations,mapState,mapActions,mapGetters} from "vuex";
                  });
         },
         methods: {
-            ...mapMutations(['changeAmountInBasket','addProductToBasket']),
+            ...mapMutations(['addAmountToBasket','addProductToBasket']),
             ...mapActions(['updateBasket'])
             }
     }

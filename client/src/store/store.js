@@ -36,7 +36,7 @@ export const store = new Vuex.Store({
         },
         async updateBasket({commit, state} , product) {
                 let isInBasket = !!state.basket.find(item => item._id == product._id);
-                    if(isInBasket)commit('changeAmountInBasket', product);
+                    if(isInBasket)commit('addAmountToBasket', product);
                     else commit('addProductToBasket', product);
             },
         async updateAmountInBasket({commit} , product) {
@@ -54,7 +54,7 @@ export const store = new Vuex.Store({
         setProducts(state, products) {
             state.products = products
         },
-        changeAmountInBasket(state,product) {
+        addAmountToBasket(state,product) {
             let productId = state.basket.findIndex(obj => obj._id == product._id);
             state.basket[productId].amount += product.amount;
         },

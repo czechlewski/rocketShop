@@ -60,7 +60,7 @@ export default {
     async moveToHome(){
       this.$router.push('/');
     },
-    ...mapMutations(['changeAmountInBasket','addProductToBasket']),
+    ...mapMutations(['addAmountToBasket','addProductToBasket']),
     ...mapActions(['updateAmountInBasket'])
   }
 }

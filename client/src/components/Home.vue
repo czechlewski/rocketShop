@@ -28,8 +28,8 @@ export default {
   },
   computed:{ 
     ...mapState(['user','products','basket']),
-    ...mapGetters(['isAuthenticated','StateBasket','StateProducts']),
-    ...mapActions(['GetProducts'])
+    ...mapActions(['GetProducts']),
+    ...mapGetters(['isAuthenticated','StateBasket','StateProducts'])
   },
   methods: {
     ...mapActions(['LogOut']),
