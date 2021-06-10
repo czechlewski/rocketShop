@@ -41,7 +41,10 @@ export const store = new Vuex.Store({
             },
         async updateAmountInBasket({commit} , product) {
                 commit('modifyAmountInBasket', product);
-            },
+        },
+        async removeProductFromBasket({ commit }, product) {
+            commit('deleteProductFromBasket', product);
+        },
         async LogOut({ commit }) {
                 let user = null;
                 commit('logOut', user)
@@ -64,6 +67,10 @@ export const store = new Vuex.Store({
         },
         addProductToBasket(state, product) {
             state.basket.push(product);
+        },
+        deleteProductFromBasket(state, product) {
+            let productId = state.basket.findIndex(obj => obj._id == product._id);
+            state.basket.splice(productId,1);
         },
         logOut(state) {
             state.user = null,

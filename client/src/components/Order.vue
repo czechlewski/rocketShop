@@ -25,10 +25,24 @@
       <br>
       <span>Do zapłaty:{{this.total}}</span>
       <br>
-      <button @click="moveToOrder()">Złóż zamówienie</button>
-    </div>
-    <div v-else>
-      <h1>Twój koszyk jest pusty</h1> 
+      <button @click="moveToBasket()">Wróć do koszyka</button>
+      <br>
+      <form>
+        <label for="fname">Imię</label><br>
+        <input type="text" v-model="user"><br>
+        <label for="lname">Nazwisko</label><br>
+        <input type="text"><br>
+        <label for="place">Miejscowość</label><br>
+        <input type="text"><br>
+        <label for="street">Ulica</label><br>
+        <input type="text"><br>
+        <label for="hNumber">Nr domu</label><br>
+        <input type="text"><br>
+        <label for="fNumber">Nr mieszkania</label><br>
+        <input type="text"><br>
+        <label for="postalCode">Kod pocztowy</label><br>
+        <input type="text"><br>
+      </form> 
     </div>
   </div>
   
@@ -36,7 +50,7 @@
 <script>
 import { mapGetters, mapState,mapActions,mapMutations} from "vuex";
 export default {
-  name: 'Basket',
+  name: 'Order',
   components: {
   },
   data() {
@@ -64,8 +78,8 @@ export default {
     async moveToHome(){
       this.$router.push('/');
     },
-    async moveToOrder(){
-      this.$router.push('/order');
+    async moveToBasket(){
+      this.$router.push('/basket');
     },
     ...mapMutations(['addAmountToBasket','modifyAmountInBasket','addProductToBasket','deleteProductFromBasket']),
     ...mapActions(['updateAmountInBasket','removeProductFromBasket'])
