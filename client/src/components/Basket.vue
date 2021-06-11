@@ -56,7 +56,7 @@ export default {
             });
         },
   computed:{ 
-    ...mapState(['user','products','basket']),
+    ...mapState(['user','products','basket','order']),
     ...mapGetters(['isAuthenticated','StateBasket','StateProducts']),
     ...mapActions(['GetProducts'])
   },

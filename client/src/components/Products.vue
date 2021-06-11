@@ -26,7 +26,7 @@ import { mapMutations,mapState,mapActions,mapGetters} from "vuex";
     export default {
         name: 'Products',
         computed:{
-            ...mapState(['products','basket']),
+            ...mapState(['products','basket','order']),
             ...mapActions(['GetProducts']),
             ...mapGetters(['isAuthenticated','StateBasket'])
         },

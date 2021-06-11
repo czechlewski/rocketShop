@@ -41,7 +41,8 @@
         <label for="fNumber">Nr mieszkania</label><br>
         <input type="text"><br>
         <label for="postalCode">Kod pocztowy</label><br>
-        <input type="text"><br>
+        <input type="text"><br><br>
+        <button @click.once="updateLocalOrder()">Wyślij zamówienie</button>
       </form> 
     </div>
   </div>
@@ -49,13 +50,18 @@
 </template>
 <script>
 import { mapGetters, mapState,mapActions,mapMutations} from "vuex";
+import { v4 as uuidv4 } from 'uuid';
 export default {
   name: 'Order',
   components: {
   },
   data() {
     return {
-      total:0
+      total:0,
+      localOrder:{id:null,
+                  date:null,
+                  time:null,
+                  orderedProducts:null}
     }
   },
   beforeMount() {
@@ -70,7 +76,7 @@ export default {
             });
         },
   computed:{ 
-    ...mapState(['user','products','basket']),
+    ...mapState(['user','products','basket','order']),
     ...mapGetters(['isAuthenticated','StateBasket','StateProducts']),
     ...mapActions(['GetProducts'])
   },
@@ -81,8 +87,26 @@ export default {
     async moveToBasket(){
       this.$router.push('/basket');
     },
-    ...mapMutations(['addAmountToBasket','modifyAmountInBasket','addProductToBasket','deleteProductFromBasket']),
-    ...mapActions(['updateAmountInBasket','removeProductFromBasket'])
+    async updateLocalOrder(){
+      let d=new Date();
+      this.localOrder.id=uuidv4();
+      this.localOrder.date=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+      this.localOrder.time=d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
+      this.localOrder.orderedProducts=this.basket;
+      this.sendOrder(this.localOrder);
+    },
+    ...mapMutations([
+      'addAmountToBasket',
+      'modifyAmountInBasket',
+      'addProductToBasket',
+      'deleteProductFromBasket',
+      'updateOrder'
+      ]),
+    ...mapActions([
+      'updateAmountInBasket',
+      'removeProductFromBasket',
+      'sendOrder'
+      ])
   }
 }
 </script>

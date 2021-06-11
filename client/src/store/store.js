@@ -9,7 +9,8 @@ export const store = new Vuex.Store({
     state: {
         user: null,
         products: null,
-        basket: []
+        basket: [],
+        order:[]
     },
     getters: {
         isAuthenticated: state => !!state.user,
@@ -45,6 +46,9 @@ export const store = new Vuex.Store({
         async removeProductFromBasket({ commit }, product) {
             commit('deleteProductFromBasket', product);
         },
+        async sendOrder({ commit }, basket) {
+            commit('updateOrder', basket);
+        },
         async LogOut({ commit }) {
                 let user = null;
                 commit('logOut', user)
@@ -72,11 +76,14 @@ export const store = new Vuex.Store({
             let productId = state.basket.findIndex(obj => obj._id == product._id);
             state.basket.splice(productId,1);
         },
+        updateOrder(state,basket) {
+            state.order.push(basket);
+        },
         logOut(state) {
             state.user = null,
-            state.basket = []
-                
+            state.basket = [],
+            state.order = []  
         }
      },
-    plugins: [createPersistedState({overwrite:true})]
+    plugins: [createPersistedState({overwrite:true}) ]
 });

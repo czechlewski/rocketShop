@@ -27,7 +27,7 @@ export default {
     Products,
   },
   computed:{ 
-    ...mapState(['user','products','basket']),
+    ...mapState(['user','products','basket','order']),
     ...mapActions(['GetProducts']),
     ...mapGetters(['isAuthenticated','StateBasket','StateProducts'])
   },
