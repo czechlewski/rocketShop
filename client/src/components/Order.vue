@@ -27,23 +27,32 @@
       <br>
       <button @click="moveToBasket()">Wróć do koszyka</button>
       <br>
+      <div v-if="this.formInputNotOK">Nie wszystkie pola zostały wypełnione</div>
+      <br>
+      <div v-if="this.postalCodeNotOK">Nieprawidłowy kod</div>
+      <br>
+      <div v-if="formSend">Zamówienie zostało wysłane</div>
       <form>
         <label for="fname">Imię</label><br>
         <input type="text" v-model="user"><br>
         <label for="lname">Nazwisko</label><br>
         <input type="text"><br>
         <label for="place">Miejscowość</label><br>
-        <input type="text"><br>
+        <input type="text" v-model="localOrder.address.place" required><br>
         <label for="street">Ulica</label><br>
-        <input type="text"><br>
-        <label for="hNumber">Nr domu</label><br>
-        <input type="text"><br>
+        <input type="text" v-model="localOrder.address.street" required><br>
+        <label for="hNumber" >Nr domu</label><br>
+        <input type="text" v-model="localOrder.address.hNumber" required><br>
         <label for="fNumber">Nr mieszkania</label><br>
-        <input type="text"><br>
+        <input type="text" v-model="localOrder.address.fNumber" required><br>
         <label for="postalCode">Kod pocztowy</label><br>
-        <input type="text"><br><br>
-        <button @click.once="updateLocalOrder()">Wyślij zamówienie</button>
-      </form> 
+        <input type="text" v-model="localOrder.address.postalCode" required><br>
+        <label for="comment">Komentarz</label><br>
+        <textarea v-model="localOrder.address.comment"></textarea><br><br>
+        <br><br>
+        <input type="submit" value="Wyślij zamówienie" @click.prevent="updateLocalOrder()">
+      </form>
+      
     </div>
   </div>
   
@@ -61,7 +70,13 @@ export default {
       localOrder:{id:null,
                   date:null,
                   time:null,
-                  orderedProducts:null}
+                  orderedProducts:null,
+                  address:{place:null, street:null,hNumber:null, fNumber:null,postalCode:null},
+                  comment:null
+                  },
+      formInputNotOK:null,
+      postalCodeNotOK:null,
+      formSend:null
     }
   },
   beforeMount() {
@@ -88,12 +103,30 @@ export default {
       this.$router.push('/basket');
     },
     async updateLocalOrder(){
-      let d=new Date();
-      this.localOrder.id=uuidv4();
-      this.localOrder.date=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
-      this.localOrder.time=d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
-      this.localOrder.orderedProducts=this.basket;
-      this.sendOrder(this.localOrder);
+      let address=this.localOrder.address;
+      let addressOK=(!!address.place&&!!address.street&&!!address.hNumber&&!!address.fNumber&&!!address.postalCode);
+      if(addressOK&&this.isPolishZipCode(this.localOrder.address.postalCode)){
+              let d=new Date();
+              this.localOrder.id=uuidv4();
+              this.localOrder.date=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+              this.localOrder.time=d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
+              this.localOrder.orderedProducts=this.basket; 
+              this.sendOrder(this.localOrder)
+              this.formInputNotOK=false;
+              this.postalCodeNotOK=false;
+              this.formSend=true;
+            }
+            else {
+              if(addressOK) {
+                this.postalCodeNotOK=true
+              }
+              else this.formInputNotOK=true
+            }
+    },
+      isPolishZipCode(input){
+      let regExp=/^[0-9]{2}[-]{1}[0-9]{3}$/;
+      if(regExp.test(input)) return true;
+      else return false;
     },
     ...mapMutations([
       'addAmountToBasket',
