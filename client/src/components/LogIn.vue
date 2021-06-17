@@ -2,9 +2,9 @@
     <div class="container">
         <div>
             <label for="uname"><b>Nazwa użytkownika</b></label>
-            <input type="text" placeholder="Użytkownik" name="uname" v-model="user.username" required>
+            <input type="text" placeholder="Użytkownik" name="uname" v-model="loginData.username" required>
             <label for="psw"><b>Hasło</b></label>
-            <input type="password" placeholder="Hasło" name="psw" v-model="user.password" required>
+            <input type="password" placeholder="Hasło" name="psw" v-model="loginData.password" required>
             <button type="submit" @click.enter="submit()">Zaloguj się</button>
             <br>
             <br>
@@ -20,10 +20,10 @@ import { mapActions } from "vuex";
         data(){
             return{
                 incorrectPsw:false,
-                user:{
+                loginData: {
                     username:'',
                     password:''
-                }
+                } 
             }
         },
         computed:{
@@ -32,9 +32,9 @@ import { mapActions } from "vuex";
             ...mapActions(['LogIn']),
                 async submit() {
                     try {
-                        await this.LogIn(this.user)
+                        await this.LogIn({username:this.loginData.username,password:this.loginData.password})
                         .then(data=>{
-                        if(data) this.$router.push("/");
+                        if(data) this.$router.push("/"); 
                         else this.incorrectPsw=true})
                         .catch(err=>console.log(err))
                     }

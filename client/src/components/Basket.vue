@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span>Jesteś zalogowany jako: {{ user }}</span>
+    <span>Jesteś zalogowany jako: {{ user.username+' '+user.userlastname }}</span>
     <br>
     <button @click="moveToHome()">Wróć do sklepu</button>
   <div v-if="this.basket.length">

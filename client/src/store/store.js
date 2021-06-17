@@ -19,11 +19,11 @@ export const store = new Vuex.Store({
         StateBasket: state => state.basket
     },
     actions: {
-        async LogIn({ commit }, User) {
+        async LogIn({ commit }, user) {
             try {
-                let response = await axios.post('login', User);
+                let response = await axios.post('login', user);
                 if (response.data) {
-                    commit('setUser', User.username);
+                    commit('setUser', response.data);
                 }
                 return response.data;
             }
@@ -55,8 +55,8 @@ export const store = new Vuex.Store({
         }
         },
     mutations: {
-        setUser(state, username) {
-            state.user = username
+        setUser(state, user) {
+            state.user = user
         },
         setProducts(state, products) {
             state.products = products
@@ -84,6 +84,6 @@ export const store = new Vuex.Store({
             state.basket = [],
             state.order = []  
         }
-     },
+    },
     plugins: [createPersistedState({overwrite:true}) ]
 });

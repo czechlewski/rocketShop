@@ -36,7 +36,20 @@ app.post('/login', async (req, res,err) => {
     try {
         await getCustomer(client, dbName, shopCustomers, req.body)
             .then(data => {
-                if (!!data) { res.send(true) }
+                if (!!data) {
+                    res.send(data)}
+                else { res.send(false) }
+            })
+            .catch(err => console.log(err));
+        }
+    catch{console.log(err);}
+});
+app.post('/order', async (req, res,err) => {
+    try {
+        await updateCustomer(client, dbName, shopCustomers, req.body)
+            .then(data => {
+                if (!!data) {
+                    res.send(true)}
                 else { res.send(false) }
             })
             .catch(err => console.log(err));
@@ -46,6 +59,12 @@ app.post('/login', async (req, res,err) => {
 async function getCustomer(dbClient,dbName,dbCollection,customer){
     try {
         return dbClient.db(dbName).collection(dbCollection).findOne(customer);
+        }
+    catch (err){ console.error(err);}
+}
+async function updateCustomer(dbClient,dbName,dbCollection,customer,payload){
+    try {
+        return dbClient.db(dbName).collection(dbCollection).update(customer,payload);
         }
     catch (err){ console.error(err);}
 }

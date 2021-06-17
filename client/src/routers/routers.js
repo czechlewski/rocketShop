@@ -4,6 +4,7 @@ import Home from "@/components/Home";
 import LogIn from "@/components/LogIn";
 import Basket from "@/components/Basket";
 import Order from "@/components/Order";
+import User from "@/components/User";
 
 Vue.use(VueRouter);
 
@@ -27,6 +28,11 @@ const routes = [
     path: "/order",
     name: "Order",
     component: Order
+  },
+  {
+    path: "/user",
+    name: "User",
+    component: User
   }
 
 ]

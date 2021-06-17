@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span>Jesteś zalogowany jako: {{ user }}</span>
+    <span>Jesteś zalogowany jako: {{ user.username+' '+user.userlastname }}</span>
     <br>
     <button @click="moveToHome()">Wróć do sklepu</button>
   <div v-if="this.basket.length">
@@ -34,23 +34,23 @@
       <div v-if="formSend">Zamówienie zostało wysłane</div>
       <form>
         <label for="fname">Imię</label><br>
-        <input type="text" v-model="user"><br>
+        <input type="text" v-model="user.username"><br>
         <label for="lname">Nazwisko</label><br>
-        <input type="text"><br>
+        <input type="text" v-model="user.userlastname"><br>
         <label for="place">Miejscowość</label><br>
-        <input type="text" v-model="localOrder.address.place" required><br>
+        <input type="text" v-model="order.address.place" required><br>
         <label for="street">Ulica</label><br>
-        <input type="text" v-model="localOrder.address.street" required><br>
+        <input type="text" v-model="order.address.street" required><br>
         <label for="hNumber" >Nr domu</label><br>
-        <input type="text" v-model="localOrder.address.hNumber" required><br>
+        <input type="text" v-model="order.address.hNumber" required><br>
         <label for="fNumber">Nr mieszkania</label><br>
-        <input type="text" v-model="localOrder.address.fNumber" required><br>
+        <input type="text" v-model="order.address.fNumber" required><br>
         <label for="postalCode">Kod pocztowy</label><br>
-        <input type="text" v-model="localOrder.address.postalCode" required><br>
+        <input type="text" v-model="order.address.postalCode" required><br>
         <label for="comment">Komentarz</label><br>
-        <textarea v-model="localOrder.address.comment"></textarea><br><br>
+        <textarea v-model="order.address.comment"></textarea><br><br>
         <br><br>
-        <input type="submit" value="Wyślij zamówienie" @click.prevent="updateLocalOrder()">
+        <input type="submit" value="Wyślij zamówienie" @click.prevent="sendLocalOrder()">
       </form>
       
     </div>
@@ -67,7 +67,7 @@ export default {
   data() {
     return {
       total:0,
-      localOrder:{id:null,
+      order:{id:null,
                   date:null,
                   time:null,
                   orderedProducts:null,
@@ -102,16 +102,16 @@ export default {
     async moveToBasket(){
       this.$router.push('/basket');
     },
-    async updateLocalOrder(){
-      let address=this.localOrder.address;
+    async sendLocalOrder(){
+      let address=this.order.address;
       let addressOK=(!!address.place&&!!address.street&&!!address.hNumber&&!!address.fNumber&&!!address.postalCode);
-      if(addressOK&&this.isPolishZipCode(this.localOrder.address.postalCode)){
+      if(addressOK&&this.isPolishZipCode(this.order.address.postalCode)){
               let d=new Date();
-              this.localOrder.id=uuidv4();
-              this.localOrder.date=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
-              this.localOrder.time=d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
-              this.localOrder.orderedProducts=this.basket; 
-              this.sendOrder(this.localOrder)
+              this.order.id=uuidv4();
+              this.order.date=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+              this.order.time=d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
+              this.order.orderedProducts=this.basket; 
+              this.sendOrder(this.order)
               this.formInputNotOK=false;
               this.postalCodeNotOK=false;
               this.formSend=true;
