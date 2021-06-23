@@ -36,35 +36,33 @@ app.post('/login', async (req, res,err) => {
     try {
         await getCustomer(client, dbName, shopCustomers, req.body)
             .then(data => {
-                if (!!data) {
-                    res.send(data)}
-                else { res.send(false) }
+                if (!!data) res.send(data)
+                else res.send('User not found') 
             })
             .catch(err => console.log(err));
         }
     catch{console.log(err);}
 });
-app.post('/order', async (req, res,err) => {
+app.post(['/order','/user'], async (req, res, err) => {
     try {
-        await updateCustomer(client, dbName, shopCustomers, req.body)
+        await updateCustomer(client, dbName, shopCustomers, { id: req.body.id} , { $set: { orders:req.body.orders }  }, {upsert:false})
             .then(data => {
-                if (!!data) {
-                    res.send(true)}
-                else { res.send(false) }
+                if (!!data) res.send('Object updated');
+                else res.send('Object not found');
             })
             .catch(err => console.log(err));
         }
     catch{console.log(err);}
 });
 async function getCustomer(dbClient,dbName,dbCollection,customer){
-    try {
+    try {   
         return dbClient.db(dbName).collection(dbCollection).findOne(customer);
         }
     catch (err){ console.error(err);}
 }
-async function updateCustomer(dbClient,dbName,dbCollection,customer,payload){
+async function updateCustomer(dbClient,dbName,dbCollection,filter,payload,options){
     try {
-        return dbClient.db(dbName).collection(dbCollection).update(customer,payload);
+        return dbClient.db(dbName).collection(dbCollection).updateOne(filter,payload,options);
         }
     catch (err){ console.error(err);}
 }
