@@ -14,8 +14,8 @@
                 <td>{{ product.name }}</td>
                 <td>{{ product.company }}</td>
                 <td>{{ product.price }}</td>
-                <td v-if="isAuthenticated"><button @click="updateBasket(product)">Dodaj do koszyka</button></td>
-                <td v-if="isAuthenticated"><input min=1 type="number" v-model.number='product.amount'></td>
+                <td><button @click="updateBasket(product)">Dodaj do koszyka</button></td>
+                <td><input min=1 type="number" v-model.number='product.amount'></td>
                 </tr>
             </tbody>
         </table>

@@ -1,8 +1,9 @@
 <template>
   <div>
-    <span>Jesteś zalogowany jako: {{ user.username+' '+user.userlastname }}</span>
-    <br>
-    <button @click="moveToHome()">Wróć do sklepu</button>
+    <span v-if="isAuthenticated">Jesteś zalogowany jako: {{ user.username+' '+user.userlastname }}</span>
+    <log-in-btn></log-in-btn>
+    <back-to-shop-btn></back-to-shop-btn>
+    <log-out-btn></log-out-btn>
   <div v-if="this.basket.length">
     <h2>Produkty w Twoim koszyku to:</h2>
       <table> 
@@ -25,7 +26,7 @@
       <br>
       <span>Do zapłaty:{{this.total}}</span>
       <br>
-      <button @click="moveToOrder()">Złóż zamówienie</button>
+      <button v-if="isAuthenticated" @click="moveToOrder()">Złóż zamówienie</button>
     </div>
     <div v-else>
       <h1>Twój koszyk jest pusty</h1> 
@@ -35,9 +36,15 @@
 </template>
 <script>
 import { mapGetters, mapState,mapActions,mapMutations} from "vuex";
+import LogInBtn from './LogInBtn.vue';
+import LogOutBtn from './LogOutBtn.vue';
+import BackToShopBtn from './BackToShopBtn.vue';
 export default {
   name: 'Basket',
   components: {
+    LogInBtn,
+    LogOutBtn,
+    BackToShopBtn
   },
   data() {
     return {
@@ -62,7 +69,10 @@ export default {
   },
   methods: {
     async moveToHome(){
-      this.$router.push('/');
+      this.$router.push('/');  
+    },
+    async moveToLoginPage(){
+      this.$router.push('/login');
     },
     async moveToOrder(){
       this.$router.push('/order');

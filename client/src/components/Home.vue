@@ -1,31 +1,32 @@
 <template>
     <div>
         <h1>Witamy w naszym sklepie z rakietami!</h1>
-        <div v-if="!isAuthenticated">
-          <h2 >Aby coś kupić, musisz być zalogowanym użytkownikiem.</h2>
-          <br>
-          <button @click="moveToLoginPage()">Zaloguj się</button>
-        </div>
-        <div v-else>
+        <log-in-btn></log-in-btn>
+        <move-to-basket-btn></move-to-basket-btn>
+        <log-out-btn></log-out-btn>
+        <div v-if="isAuthenticated">
           <span>Jesteś zalogowany jako: {{ user.username+' '+user.userlastname }}</span>
           <br>
           <button @click="moveToUserPage()">Moje konto</button>
           <br>
-          <button @click="moveToBasket()">Przejdź do koszyka</button>
-          <br>
-          <button  @click="LogOut()">Wyloguj się</button>
         </div>
-        <Products/>
+        <products></products>
     </div>
 </template>
 
 <script>
-import Products from './Products.vue'
 import { mapGetters, mapState, mapActions} from "vuex";
+import Products from './Products.vue'
+import LogInBtn from './LogInBtn.vue';
+import LogOutBtn from './LogOutBtn.vue';
+import MoveToBasketBtn from './MoveToBasketBtn.vue';
 export default {
   name: 'Home',
   components: {
     Products,
+    LogInBtn,
+    LogOutBtn,
+    MoveToBasketBtn
   },
   computed:{ 
     ...mapState(['user','products','basket','order']),
@@ -33,13 +34,7 @@ export default {
     ...mapGetters(['isAuthenticated','StateBasket','StateProducts'])
   },
   methods: {
-    ...mapActions(['LogOut']),
-    async moveToBasket(){
-      this.$router.push('/basket');
-    },
-    async moveToLoginPage(){
-      this.$router.push('/login');
-          },
+    
     async moveToUserPage(){
       this.$router.push('/user');
           }
