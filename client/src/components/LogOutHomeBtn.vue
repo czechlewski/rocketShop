@@ -1,6 +1,6 @@
 ﻿<template>
     <div v-if="isAuthenticated">
-        <button  @click="LogOut()&&moveToHome()">Wyloguj się</button>
+        <button  @click="LogOut()">Wyloguj się</button>
     </div>
 </template>
 <script>
@@ -10,10 +10,7 @@ export default {
     ...mapGetters(['isAuthenticated'])
     },
     methods: {
-    ...mapActions(['LogOut']),
-    async moveToHome(){
-      this.$router.push('/');
-        }
+    ...mapActions(['LogOut'])
     }
 }
 </script>

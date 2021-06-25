@@ -7,15 +7,16 @@
                 <th>Nazwa</th>
                 <th>Producent</th>
                 <th>Cena</th>
+                <th>Liczba</th>
             </tr>
             </thead>
             <tbody>
-              <tr v-for="product in localProducts" :key="product._id">
+              <tr v-for="product in this.localProducts" :key="product._id">
                 <td>{{ product.name }}</td>
                 <td>{{ product.company }}</td>
                 <td>{{ product.price }}</td>
-                <td><button @click="updateBasket(product)">Dodaj do koszyka</button></td>
                 <td><input min=1 type="number" v-model.number='product.amount'></td>
+                <td><button @click="updateBasket(product)">Dodaj do koszyka</button></td>
                 </tr>
             </tbody>
         </table>
@@ -28,7 +29,7 @@ import { mapMutations,mapState,mapActions,mapGetters} from "vuex";
         computed:{
             ...mapState(['products','basket','order']),
             ...mapActions(['GetProducts']),
-            ...mapGetters(['isAuthenticated','StateBasket'])
+            ...mapGetters(['isAuthenticated','StateBasket','StateProducts'])
         },
         data() {
             return {
@@ -36,11 +37,13 @@ import { mapMutations,mapState,mapActions,mapGetters} from "vuex";
             }
         },
         beforeMount() {
-                 this.localProducts = this.products;
-                 this.localProducts.forEach(element => {
+                this.GetProducts;
+                this.StateProducts;
+                this.localProducts = this.products;
+                this.localProducts.forEach(element => {
                      element.amount=1;
                  });
-        },
+        }, 
         methods: {
             ...mapMutations(['addAmountToBasket','addProductToBasket']),
             ...mapActions(['updateBasket'])

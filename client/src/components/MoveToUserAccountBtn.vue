@@ -1,6 +1,6 @@
 ﻿<template>
-    <div v-if="!isAuthenticated">
-        <button @click="moveToLoginPage()">Zaloguj się</button>
+    <div v-if="isAuthenticated">
+        <button @click="moveToUserPage()">Moje konto</button>
     </div>
 </template>
 <script>
@@ -10,8 +10,8 @@ export default {
     ...mapGetters(['isAuthenticated'])
     },
     methods: {
-    async moveToLoginPage(){
-      this.$router.push('/login');
+    async moveToUserPage(){
+      this.$router.push('/user');
           }
     }
 }

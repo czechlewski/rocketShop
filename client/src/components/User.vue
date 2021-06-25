@@ -2,11 +2,9 @@
     <div>
         <h1>Twój profil</h1>
         <div v-if="isAuthenticated">
-          <button @click="moveToHome()">Wróć do sklepu</button>
-          <br>
-          <button @click="moveToBasket()">Przejdź do koszyka</button>
-          <br>
-          <button  @click="LogOut()&&moveToHome()">Wyloguj się</button>
+          <back-to-shop-btn></back-to-shop-btn>
+          <move-to-basket-btn></move-to-basket-btn>
+          <log-out-btn></log-out-btn>
           <div>Imię:{{ user.username }}</div>
           <div>Nazwisko:{{ user.userlastname }}</div>
           <div>Email:{{ user.useremail }}</div>
@@ -39,10 +37,16 @@
 
 <script>
 import { mapGetters, mapState, mapActions} from "vuex";
+import MoveToBasketBtn from './MoveToBasketBtn.vue';
+import BackToShopBtn from './BackToShopBtn.vue';
+import LogOutBtn from './LogOutBtn.vue';
 import axios from 'axios';
 export default {
   name: 'User',
   components: {
+    LogOutBtn,
+    MoveToBasketBtn,
+    BackToShopBtn
   },
   computed:{ 
     ...mapState(['user','products','basket','order']),
@@ -53,12 +57,6 @@ export default {
     ...mapActions(['LogOut','removeOrderFormUser']),
     async moveToBasket(){
       this.$router.push('/basket');
-    },
-    async moveToHome(){
-      this.$router.push('/');
-    },
-    async moveToLoginPage(){
-      this.$router.push('/login');
     },
     async sendLocalUser(){
       await axios.post('user', this.user);

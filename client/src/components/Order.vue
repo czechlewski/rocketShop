@@ -1,38 +1,12 @@
 <template>
   <div>
-    <span>Jesteś zalogowany jako: {{ user.username+' '+user.userlastname }}</span>
-    <br>
-    <button @click="moveToHome()">Wróć do sklepu</button>
-  <div v-if="this.basket.length">
-    <h2>Produkty w Twoim koszyku to:</h2>
-      <table> 
-        <thead>
-          <tr>
-            <th>Nazwa</th>
-            <th>Cena</th>
-            <th>Liczba w koszyku</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="product in basket" :key="product._id">
-            <td>{{ product.name }}</td>
-            <td>{{ product.price }}</td>
-            <td><input min=1 type="number" v-model.number='product.amount' @click="updateAmountInBasket(product)"></td>
-            <td><button @click="removeProductFromBasket(product)">Usuń z koszyka</button></td>
-           </tr>
-        </tbody>    
-      </table>
-      <br>
-      <span>Do zapłaty:{{this.total}}</span>
-      <br>
-    </div>
-    <div><button @click="moveToBasket()">Wróć do koszyka</button></div>
+    <basket></basket>
     <div v-if="this.formInputNotOK">Nie wszystkie pola zostały wypełnione</div>
       <br>
     <div v-if="this.postalCodeNotOK">Nieprawidłowy kod</div>
       <br>
     <div v-if="formSend">Zamówienie zostało wysłane</div>
-      <form v-if="this.basket.length">
+    <form>
         <label for="fname">Imię</label><br>
         <input type="text" v-model="user.username"><br>
         <label for="lname">Nazwisko</label><br>
@@ -52,15 +26,17 @@
         <br><br>
         <input type="submit" value="Wyślij zamówienie" @click.prevent="sendLocalOrder()">
       </form>
-    </div>
+  </div>   
 </template>
 <script>
 import { mapGetters, mapState,mapActions,mapMutations} from "vuex";
+import Basket from './Basket.vue'
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 export default {
   name: 'Order',
   components: {
+    Basket
   },
   data() {
     return {
@@ -95,12 +71,6 @@ export default {
     ...mapActions(['GetProducts'])
   },
   methods: {
-    async moveToHome(){
-      this.$router.push('/');
-    },
-    async moveToBasket(){
-      this.$router.push('/basket');
-    },
     async sendLocalOrder(){
       let address=this.order.address;
       let addressOK=(!!address.place&&!!address.street&&!!address.hNumber&&!!address.fNumber&&!!address.postalCode);

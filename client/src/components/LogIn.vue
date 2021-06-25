@@ -1,15 +1,14 @@
 <template>
-    <div class="container">
-        <div>
-            <label for="uname"><b>Nazwa użytkownika</b></label>
-            <input type="text" placeholder="Użytkownik" name="uname" v-model="loginData.username" required>
-            <label for="psw"><b>Hasło</b></label>
-            <input type="password" placeholder="Hasło" name="psw" v-model="loginData.password" required>
-            <button type="submit" @click.enter="submit()">Zaloguj się</button>
-            <br>
-            <br>
-            <span v-if="incorrectPsw">Nieparwidłowy login lub hasło</span>
-        </div>
+    <div>   
+        <label for="uname"><b>Nazwa użytkownika</b></label>
+        <input type="text" placeholder="Użytkownik" name="uname" v-model="loginData.username" required>
+        <br>
+        <label for="psw"><b>Hasło</b></label>
+        <input type="password" placeholder="Hasło" name="psw" v-model="loginData.password" required>
+        <br>
+        <button type="submit" @click.enter="submit()">Zaloguj się</button>
+        <br>
+        <span v-if="incorrectPsw">Nieparwidłowy login lub hasło</span>
     </div>
 </template>
 
