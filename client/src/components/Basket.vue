@@ -2,6 +2,7 @@
   <div>
     <logged-as-inf></logged-as-inf>
     <log-in-btn></log-in-btn>
+    <register-btn></register-btn>
     <move-to-user-account-btn></move-to-user-account-btn>
     <back-to-shop-btn></back-to-shop-btn>
     <log-out-btn></log-out-btn>
@@ -36,6 +37,7 @@
 <script>
 import { mapGetters, mapState,mapActions,mapMutations} from "vuex";
 import LogInBtn from './LogInBtn.vue';
+import RegisterBtn from './RegisterBtn.vue';
 import LogOutBtn from './LogOutBtn.vue';
 import BackToShopBtn from './BackToShopBtn.vue';
 import MoveToUserAccountBtn from './MoveToUserAccountBtn.vue';
@@ -45,6 +47,7 @@ export default {
   name: 'Basket',
   components: {
     LogInBtn,
+    RegisterBtn,
     LogOutBtn,
     BackToShopBtn,
     MoveToOrderBtn,

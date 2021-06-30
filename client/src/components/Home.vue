@@ -3,6 +3,7 @@
         <h1>Witamy w naszym sklepie z rakietami!</h1>
         <logged-as-inf></logged-as-inf>
         <move-to-user-account-btn></move-to-user-account-btn>
+        <register-btn></register-btn>
         <log-in-btn></log-in-btn>
         <move-to-basket-btn></move-to-basket-btn>
         <log-out-home-btn></log-out-home-btn>
@@ -12,8 +13,9 @@
 
 <script>
 import { mapGetters, mapState, mapActions} from "vuex";
-import Products from './Products.vue'
+import Products from './Products.vue';
 import LogInBtn from './LogInBtn.vue';
+import RegisterBtn from './RegisterBtn.vue';
 import LogOutHomeBtn from './LogOutHomeBtn.vue';
 import MoveToBasketBtn from './MoveToBasketBtn.vue';
 import MoveToUserAccountBtn from './MoveToUserAccountBtn.vue';
@@ -23,6 +25,7 @@ export default {
   components: {
     Products,
     LogInBtn,
+    RegisterBtn,
     LogOutHomeBtn,
     MoveToBasketBtn,
     MoveToUserAccountBtn,

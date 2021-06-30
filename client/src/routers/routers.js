@@ -2,6 +2,7 @@
 import VueRouter from "vue-router";
 import Home from "@/components/Home";
 import LogIn from "@/components/LogIn";
+import Register from "@/components/Register";
 import Basket from "@/components/Basket";
 import Order from "@/components/Order";
 import User from "@/components/User";
@@ -19,6 +20,11 @@ const routes = [
       name: "LogIn",
       component: LogIn
   },
+  {
+    path: "/register",
+    name: "Register",
+    component: Register
+},
   {
     path: "/basket",
     name: "Basket",
