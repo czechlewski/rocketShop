@@ -31,6 +31,16 @@ export const store = new Vuex.Store({
                 console.log(err);
             }
         },
+        async Register({ commit }, user) {
+            try {
+                let response = await axios.post('register', user);
+                commit('setUser', user);
+                return response.data;
+            }
+            catch (err) {
+                console.log(err);
+            }
+        },
         async GetProducts({ commit }) {
             let response = await axios.get()
             commit('setProducts', response.data)

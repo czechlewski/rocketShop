@@ -1,8 +1,8 @@
 <template>
   <div>
     <logged-as-inf></logged-as-inf>
-    <log-in-btn></log-in-btn>
     <register-btn></register-btn>
+    <log-in-btn></log-in-btn>
     <move-to-user-account-btn></move-to-user-account-btn>
     <back-to-shop-btn></back-to-shop-btn>
     <log-out-btn></log-out-btn>

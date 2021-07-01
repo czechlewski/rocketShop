@@ -1,9 +1,14 @@
 <template>
-    <div>   
+    <div>
+        <register-btn></register-btn>
+        <back-to-shop-btn></back-to-shop-btn>
+        <move-to-basket-btn></move-to-basket-btn>  
         <label for="uname"><b>Nazwa użytkownika</b></label>
+        <br>
         <input type="text" placeholder="Użytkownik" name="uname" v-model="loginData.username" required>
         <br>
         <label for="psw"><b>Hasło</b></label>
+        <br>
         <input type="password" placeholder="Hasło" name="psw" v-model="loginData.password" required>
         <br>
         <button type="submit" @click.enter="submit()">Zaloguj się</button>
@@ -14,8 +19,16 @@
 
 <script>
 import { mapActions } from "vuex";
+import BackToShopBtn from './BackToShopBtn.vue';
+import MoveToBasketBtn from './MoveToBasketBtn.vue';
+import RegisterBtn from './RegisterBtn.vue';
     export default {
         name: 'LogIn',
+        components: {
+            BackToShopBtn,
+            MoveToBasketBtn,
+            RegisterBtn
+        },
         data(){
             return{
                 incorrectPsw:false,

@@ -43,6 +43,17 @@ app.post('/login', async (req, res,err) => {
         }
     catch{console.log(err);}
 });
+app.post('/register', async (req, res,err) => {
+    try {
+        await addCustomer(client, dbName, shopCustomers, req.body)
+            .then(data => {
+                if (!!data) res.send('User added to database.')
+                else res.send('Error! User not added to database.') 
+            })
+            .catch(err => console.log(err));
+        }
+    catch{console.log(err);}
+});
 app.post(['/order','/user'], async (req, res, err) => {
     try {
         await updateCustomer(client, dbName, shopCustomers, { id: req.body.id} , { $set: { orders:req.body.orders }  }, {upsert:false})
@@ -54,6 +65,12 @@ app.post(['/order','/user'], async (req, res, err) => {
         }
     catch{console.log(err);}
 });
+async function addCustomer(dbClient,dbName,dbCollection,customer){
+    try {   
+        return dbClient.db(dbName).collection(dbCollection).insertOne(customer);
+        }
+    catch (err){ console.error(err);}
+}
 async function getCustomer(dbClient,dbName,dbCollection,customer){
     try {   
         return dbClient.db(dbName).collection(dbCollection).findOne(customer);
