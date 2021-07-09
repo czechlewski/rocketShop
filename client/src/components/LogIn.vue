@@ -33,8 +33,8 @@ import RegisterBtn from './RegisterBtn.vue';
             return{
                 incorrectPsw:false,
                 loginData: {
-                    username:'',
-                    password:''
+                    username:null,
+                    password:null
                 } 
             }
         },

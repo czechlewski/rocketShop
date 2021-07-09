@@ -19,6 +19,8 @@
         <input type="password" placeholder="Hasło" name="psw" v-model="registerData.password" required>
         <br>
         <button type="submit" @click.enter="register()">Zarejestruj się</button>
+        <br>
+        <span v-if="incorrectRegisterData">Nieparwidłowe dane</span>
     </div>
 </template>
 
@@ -34,11 +36,12 @@ import MoveToBasketBtn from './MoveToBasketBtn.vue';
         },
         data(){
             return{
+                incorrectRegisterData:false,
                 registerData: {
-                    username:'',
-                    userlastname:'',
-                    useremail:'',
-                    password:'',
+                    username:null,
+                    userlastname:null,
+                    useremail:null,
+                    password:null,
                     orders:[]
                 } 
             }
@@ -52,10 +55,14 @@ import MoveToBasketBtn from './MoveToBasketBtn.vue';
                 async register() {
                     try {
                         await this.Register(
-                            this.registerData)
+                        this.registerData)
                         .then(data=>{
                         if(data) this.$router.push("/");
-                        else this.$router.push("/register")})
+                        else {
+                        //this.$router.push("/register")
+                        this.incorrectRegisterData=true;
+                        }
+                        })
                         .catch(err=>console.log(err))
                     }
                     catch(err) {console.log(err)}

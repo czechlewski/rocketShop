@@ -1,4 +1,5 @@
 ﻿//express
+const bcrypt =require('bcrypt');
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -36,8 +37,10 @@ app.post('/login', async (req, res,err) => {
     try {
         await getCustomer(client, dbName, shopCustomers, req.body)
             .then(data => {
-                if (!!data) res.send(data)
-                else res.send('User not found') 
+                //console.log(data.username);
+                //console.log(data.password);
+                if (!!data) res.send(data);
+                else res.send(false);
             })
             .catch(err => console.log(err));
         }
@@ -45,12 +48,19 @@ app.post('/login', async (req, res,err) => {
 });
 app.post('/register', async (req, res,err) => {
     try {
-        await addCustomer(client, dbName, shopCustomers, req.body)
-            .then(data => {
-                if (!!data) res.send('User added to database.')
-                else res.send('Error! User not added to database.') 
-            })
-            .catch(err => console.log(err));
+        if (req.body.password) {
+            await bcrypt.hash(toString(req.body.password), 10)
+                .then(hash => {
+                    req.body.password = hash;
+                    addCustomer(client, dbName, shopCustomers, req.body)
+                        .then(data => {
+                            if (data) res.send('User added to database.')
+                            else res.send(false)
+                        })
+                        .catch(err => console.log(err));
+                }).catch(err => console.error(err.message));
+        }
+        else res.send(false)
         }
     catch{console.log(err);}
 });
@@ -66,7 +76,7 @@ app.post(['/order','/user'], async (req, res, err) => {
     catch{console.log(err);}
 });
 async function addCustomer(dbClient,dbName,dbCollection,customer){
-    try {   
+    try {
         return dbClient.db(dbName).collection(dbCollection).insertOne(customer);
         }
     catch (err){ console.error(err);}
