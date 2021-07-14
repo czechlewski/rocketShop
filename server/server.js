@@ -37,10 +37,12 @@ app.post('/login', async (req, res,err) => {
     try {
         await getCustomer(client, dbName, shopCustomers, req.body)
             .then(data => {
-                //console.log(data.username);
-                //console.log(data.password);
-                if (!!data) res.send(data);
-                else res.send(false);
+                bcrypt.compare(req.body.password, data.password)
+                    .then(result => {
+                        console.log(result)
+                        if (result) res.send(data);
+                        else res.send(false); })
+                    .catch(err => console.log(err))    
             })
             .catch(err => console.log(err));
         }
@@ -48,8 +50,7 @@ app.post('/login', async (req, res,err) => {
 });
 app.post('/register', async (req, res,err) => {
     try {
-        if (req.body.password) {
-            await bcrypt.hash(toString(req.body.password), 10)
+        await bcrypt.hash(req.body.password, 10)
                 .then(hash => {
                     req.body.password = hash;
                     addCustomer(client, dbName, shopCustomers, req.body)
@@ -59,8 +60,6 @@ app.post('/register', async (req, res,err) => {
                         })
                         .catch(err => console.log(err));
                 }).catch(err => console.error(err.message));
-        }
-        else res.send(false)
         }
     catch{console.log(err);}
 });
@@ -82,8 +81,8 @@ async function addCustomer(dbClient,dbName,dbCollection,customer){
     catch (err){ console.error(err);}
 }
 async function getCustomer(dbClient,dbName,dbCollection,customer){
-    try {   
-        return dbClient.db(dbName).collection(dbCollection).findOne(customer);
+    try {
+        return dbClient.db(dbName).collection(dbCollection).findOne({username: customer.username });
         }
     catch (err){ console.error(err);}
 }

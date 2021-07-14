@@ -44,11 +44,17 @@ import RegisterBtn from './RegisterBtn.vue';
             ...mapActions(['LogIn']),
                 async submit() {
                     try {
+                        let correctLoginData=!!this.loginData.username&&!!this.loginData.password
+                        if(correctLoginData){
                         await this.LogIn({username:this.loginData.username,password:this.loginData.password})
                         .then(data=>{
                         if(data) this.$router.push("/"); 
                         else this.incorrectPsw=true})
                         .catch(err=>console.log(err))
+                        }
+                        else{
+                            this.incorrectPsw=true
+                        }
                     }
                     catch(err) {console.log(err)}
             }

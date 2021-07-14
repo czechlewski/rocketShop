@@ -20,7 +20,7 @@
         <br>
         <button type="submit" @click.enter="register()">Zarejestruj się</button>
         <br>
-        <span v-if="incorrectRegisterData">Nieparwidłowe dane</span>
+        <span v-if="incorrectRegisterData">Wszystkie pola muszą być wypełnione</span>
     </div>
 </template>
 
@@ -54,16 +54,20 @@ import MoveToBasketBtn from './MoveToBasketBtn.vue';
             ...mapActions(['Register']),
                 async register() {
                     try {
+                        let registerDataCorrect=!!this.registerData.username&&!!this.registerData.userlastname&&!!this.registerData.useremail&&!!this.registerData.password
+                        if(registerDataCorrect){
                         await this.Register(
                         this.registerData)
                         .then(data=>{
                         if(data) this.$router.push("/");
                         else {
-                        //this.$router.push("/register")
                         this.incorrectRegisterData=true;
-                        }
-                        })
+                        }})
                         .catch(err=>console.log(err))
+                        }
+                        else{
+                            this.incorrectRegisterData=true;
+                        }
                     }
                     catch(err) {console.log(err)}
             }
