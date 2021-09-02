@@ -8,6 +8,7 @@ export default {
     methods: {
     async moveToBasket(){
       this.$router.push('/basket');
+      location.reload(); 
     },
     }
 }

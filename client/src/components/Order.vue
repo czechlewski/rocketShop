@@ -6,7 +6,7 @@
     <div v-if="this.postalCodeNotOK">Nieprawidłowy kod</div>
       <br>
     <div v-if="formSend">Zamówienie zostało wysłane</div>
-    <form>
+    <form v-if="this.basket.length">
         <label for="fname">Imię</label><br>
         <input type="text" v-model="user.username"><br>
         <label for="lname">Nazwisko</label><br>
