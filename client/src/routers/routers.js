@@ -51,7 +51,11 @@ const router = new VueRouter({
 });
 
 router.beforeResolve((to, from, next) => {
+<<<<<<< HEAD
   if ((to.name == 'User' || to.name == 'Order') && !(store.getters.isAuthenticated)) next({ name: 'LogIn' })
+=======
+  if (to.name == 'User' || to.name == 'Order' && !(store.getters.isAuthenticated)) next({ name: 'Home' })
+>>>>>>> 3f70af6a1fd56bacec643b07d756950c5192de18
   else next()
 })
 
