@@ -1,6 +1,6 @@
 ﻿<template>
     <div v-if="!isAuthenticated">
-        <button @click="moveToRegisterPage()">Zarejestruj się</button>
+        <b-button  variant="danger"  @click="moveToRegisterPage()">Zarejestruj się</b-button>
     </div>
 </template>
 <script>

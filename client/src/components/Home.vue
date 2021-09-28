@@ -3,9 +3,11 @@
         <h1>Witamy w naszym sklepie z rakietami!</h1>
         <logged-as-inf></logged-as-inf>
         <move-to-user-account-btn></move-to-user-account-btn>
+        <b-button-group>
         <register-btn></register-btn>
         <log-in-btn></log-in-btn>
         <move-to-basket-btn></move-to-basket-btn>
+        </b-button-group>
         <log-out-home-btn></log-out-home-btn>
         <products></products>
     </div>

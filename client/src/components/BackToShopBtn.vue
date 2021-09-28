@@ -1,6 +1,6 @@
 ﻿<template>
     <div>
-      <button @click="moveToHome()">Wróć do sklepu</button>
+      <b-button  variant="secondary"  @click="moveToHome()">Wróć do sklepu</b-button>
     </div>
 </template>
 <script>

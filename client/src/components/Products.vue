@@ -16,7 +16,7 @@
                 <td>{{ product.company }}</td>
                 <td>{{ product.price }}</td>
                 <td><input min=1 type="number" v-model.number='product.amount'></td>
-                <td><button @click="updateBasket(product)">Dodaj do koszyka</button></td>
+                <td><b-button variant="primary" @click="updateBasket(product)">Dodaj do koszyka</b-button></td>
                 </tr>
             </tbody>
         </table>

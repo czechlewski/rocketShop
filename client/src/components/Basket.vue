@@ -21,7 +21,7 @@
               <td>{{ product.name }}</td>
               <td>{{ product.price }}</td>
               <td><input min=1 type="number" v-model.number='product.amount' @click="updateAmountInBasket(product)"></td>
-              <td><button @click="removeProductFromBasket(product)">Usuń z koszyka</button></td>
+              <td><b-button  variant="danger"  @click="removeProductFromBasket(product)">Usuń z koszyka</b-button></td>
             </tr>
           </tbody>    
         </table>
