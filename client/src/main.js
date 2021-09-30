@@ -6,6 +6,7 @@ import axios from 'axios';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+import './scss/app.scss'
 
 axios.defaults.withCredentials = false
 axios.defaults.baseURL = 'http://localhost:8000';

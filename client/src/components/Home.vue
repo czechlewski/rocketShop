@@ -1,6 +1,10 @@
 <template>
     <div>
+      <b-container>
+        <b-row>
         <h1>Witamy w naszym sklepie z rakietami!</h1>
+        </b-row>
+        <b-row>
         <logged-as-inf></logged-as-inf>
         <move-to-user-account-btn></move-to-user-account-btn>
         <b-button-group>
@@ -10,6 +14,8 @@
         </b-button-group>
         <log-out-home-btn></log-out-home-btn>
         <products></products>
+        </b-row>
+      </b-container>
     </div>
 </template>
 
